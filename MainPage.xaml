@@ -1,0 +1,116 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WasteSortingMauiApp.MainPage"
+             xmlns:viewmodels="clr-namespace:WasteSortingMauiApp.ViewModels"
+             xmlns:models="clr-namespace:WasteSortingMauiApp.Models"
+             x:DataType="viewmodels:MainViewModel"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             Title="{Binding Title}"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Text="" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" FontSize="20"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="12,12,12,0">
+            <SearchBar Placeholder="" Text="{Binding SearchKey}" TextColor="Black" BackgroundColor="WhiteSmoke" SearchCommand="{Binding SearchCommand}" CancelButtonColor="LightGrey" >
+                <SearchBar.Shadow>
+                    <Shadow Brush="#000000" Offset="10,10" Radius="40" Opacity="0.3"/>
+                </SearchBar.Shadow>
+            </SearchBar>
+        </Grid>
+        <CollectionView Grid.Row="2"  ItemsSource="{Binding WasteModels}" Margin="12">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="2" Orientation="Vertical" HorizontalItemSpacing="6" VerticalItemSpacing="6"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="viewmodels:WasteItemViewModel" BackgroundColor="White" BindingContext="{Binding .}" Padding="12">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TappedCommand}"/>
+                        </Grid.GestureRecognizers>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding Waste.Icon}" WidthRequest="48" HeightRequest="48" Grid.Row="0" Grid.Column="0">
+                            <Image.Shadow>
+                                <Shadow Brush="#000000" Offset="10,10" Radius="20" Opacity="0.5"/>
+                            </Image.Shadow>
+                        </Image>
+                        <Label Text="{Binding Waste.Name}" Grid.Column="0" TextColor="DarkGray" Grid.Row="1" Margin="0,12,0,0"/>
+                        <Label Text="{Binding Number}" Grid.Column="1" HorizontalOptions="End" Grid.Row="0" TextColor="Black"  FontSize="24" FontAttributes="Bold"/>
+                    </Grid>
+                    <!--<Grid Padding="6" BindingContext="{Binding .}">
+                        <Border StrokeThickness="6" BindingContext="{Binding .}" Stroke="White" BackgroundColor="White" HorizontalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12,12,12,12"/>
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Offset="6,6" Radius="12" Opacity="0.4"/>
+                            </Border.Shadow>
+                           
+                        </Border>
+                    </Grid>-->
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>   
+
+
+
+    <!--<ScrollView>
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
+              Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
+
+            <Label 
+                Text="Hello, World!"
+                Grid.Row="0"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Label 
+                Text="Welcome to .NET Multi-platform App UI"
+                Grid.Row="1"
+                SemanticProperties.HeadingLevel="Level1"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Label 
+                Text="Current count: 0"
+                Grid.Row="2"
+                FontSize="18"
+                FontAttributes="Bold"
+                x:Name="CounterLabel"
+                HorizontalOptions="Center" />
+
+            <Button 
+                Text="Click me"
+                FontAttributes="Bold"
+                Grid.Row="3"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center" />
+
+            <Image Grid.Row="4"
+                Source="dotnet_bot.png"
+                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                WidthRequest="250"
+                HeightRequest="310"
+                HorizontalOptions="Center" />
+
+        </Grid>
+    </ScrollView>-->
+</ContentPage>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:viewmodels="clr-namespace:WasteSortingMauiApp.ViewModels"
+             xmlns:dtos="clr-namespace:WasteSortingMauiApp.Dtos"
+             x:Class="WasteSortingMauiApp.Pages.SuggestListPage"
+             x:DataType="viewmodels:SuggestListViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="12,12,12,0">
+            <SearchBar Placeholder="" Text="{Binding SearchKey}" TextColor="Black" BackgroundColor="WhiteSmoke" SearchCommand="{Binding SearchCommand}" CancelButtonColor="LightGrey" >
+                <SearchBar.Shadow>
+                    <Shadow Brush="#000000" Offset="10,10" Radius="40" Opacity="0.3"/>
+                </SearchBar.Shadow>
+            </SearchBar>
+        </Grid>
+        <CollectionView ItemsSource="{Binding Keys}" Grid.Row="1" Margin="12">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="1"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="viewmodels:KeyItemViewModel" Padding="12" BackgroundColor="White"> 
+                        <Label Text="{Binding Name}" TextColor="Black"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding KeyTappedCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid BackgroundColor="#80000000" Opacity="50" IsVisible="{Binding IsBusy}" Grid.RowSpan="2" >
+            <ProgressBar IsEnabled="True" ProgressColor="Green" Margin="12" />
+            <IndicatorView IsEnabled="True" IndicatorColor="Red"/>
+        </Grid>
+    </Grid>
+    
+</ContentPage>

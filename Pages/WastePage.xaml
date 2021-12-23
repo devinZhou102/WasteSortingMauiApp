@@ -1,0 +1,45 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:viewmodels="clr-namespace:WasteSortingMauiApp.ViewModels"
+             xmlns:dtos="clr-namespace:WasteSortingMauiApp.Dtos"
+             x:DataType="viewmodels:WasteViewModel"
+             x:Class="WasteSortingMauiApp.Pages.WastePage"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0"  Grid.Column="0" Source="{Binding WasteIcon}" WidthRequest="48" HeightRequest="48">
+            <Image.Shadow>
+                <Shadow Brush="#000000" Offset="10,10" Radius="20" Opacity="0.5"/>
+            </Image.Shadow>
+        </Image>
+        <Label Grid.Row="0"  Grid.Column="1" Text="{Binding Description}" VerticalOptions="Center" TextColor="Green"/>
+        <Label Grid.Row="1"  Grid.Column="0" Text="包括:" TextColor="Black" Margin="0,6"/>
+        <Label Grid.Row="1"  Grid.Column="1" Text="{Binding Include}" TextColor="Black" Margin="0,6"/>
+        <Label Grid.Row="2"  Grid.Column="0" Text="注意:" TextColor="Black"/>
+        <Label Grid.Row="2"  Grid.Column="1" Text="{Binding Notice}" TextColor="OrangeRed"/>
+        <CollectionView Grid.Row="3" ItemsSource="{Binding WasteDatas}" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0,6">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Span="2" Orientation="Vertical" HorizontalItemSpacing="1" VerticalItemSpacing="1"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:DataType="dtos:WasteDto" BackgroundColor="White" Padding="12,8">
+                        <Label Text="{Binding name}" HorizontalOptions="Center" TextColor="Black"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

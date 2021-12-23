@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:viewmodels="clr-namespace:WasteSortingMauiApp.ViewModels"
+             xmlns:dtos="clr-namespace:WasteSortingMauiApp.Dtos"
+             x:DataType="viewmodels:WasteDetailViewModel"
+             Title="{Binding WasteName}"
+             BackgroundColor="{DynamicResource SecondaryColor}"
+             x:Class="WasteSortingMauiApp.Pages.WasteDetailPage">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Waste.Name}" Margin="12,0" Grid.Row="0" VerticalOptions="Center" Grid.ColumnSpan="2"  TextColor="Black" FontAttributes="Bold" FontSize="28"/>
+            <Image Source="{Binding Waste.Icon}"  Margin="12,0,0,0" WidthRequest="48" HeightRequest="48" Grid.Row="1" Grid.Column="0">
+                <Image.Shadow>
+                    <Shadow Brush="#000000" Offset="10,10" Radius="20" Opacity="0.5"/>
+                </Image.Shadow>
+            </Image>
+
+            <Label Text="{Binding Waste.Description}" Grid.Row="1"  Margin="0,0,12,0" Grid.Column="1" TextColor="Black" FontSize="16"/>
+
+            <Grid BackgroundColor="White" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,12">
+                <Label Text="{Binding Waste.Name,StringFormat='{0}包括'}"  Margin="12,0,0,0" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+            </Grid>
+            <Label Text="{Binding Waste.Info}" Grid.Row="3" Grid.ColumnSpan="2" Margin="12,0" TextColor="Black"/>
+            <Grid BackgroundColor="White" Grid.Row="4" Grid.ColumnSpan="2"  Margin="0,12">
+                <Label Text="{Binding Waste.Name,StringFormat='{0}注意'}"  Margin="12,0,0,0" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+            </Grid>
+            <Label Text="{Binding Waste.Notice}" Grid.Row="5"  Margin="12,0" Grid.ColumnSpan="2" TextColor="Black"/>
+            <Grid BackgroundColor="#80000000" Opacity="50" IsVisible="{Binding IsBusy}" Grid.RowSpan="6" Grid.ColumnSpan="2">
+                <ProgressBar IsEnabled="True" ProgressColor="Green" Margin="12" Progress="50" />
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
