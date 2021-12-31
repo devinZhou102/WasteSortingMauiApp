@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugProfile>Pixel 2 - API 28 (Android 9.0 - API 28)</ActiveDebugProfile>
+    <ActiveDebugProfile>Samsung SM-G7810 (Android 11.0 - API 30)</ActiveDebugProfile>
     <SelectedDevice>Samsung SM-G7810</SelectedDevice>
     <DefaultDevice>pixel_2_-_api_28</DefaultDevice>
   </PropertyGroup>
