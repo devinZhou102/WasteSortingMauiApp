@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
+    <ActiveDebugFramework>net6.0-windows10.0.19041</ActiveDebugFramework>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugProfile>Samsung SM-G7810 (Android 11.0 - API 30)</ActiveDebugProfile>
-    <SelectedDevice>Samsung SM-G7810</SelectedDevice>
+    <ActiveDebugProfile>Windows Machine</ActiveDebugProfile>
+    <SelectedDevice>Android Emulator</SelectedDevice>
     <DefaultDevice>pixel_2_-_api_28</DefaultDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetPlatformIdentifier)'=='iOS'">
