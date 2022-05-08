@@ -13,7 +13,7 @@
 		<ApplicationTitle>垃圾分类助手</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.WasteSortingMauiApp</ApplicationId>
+		<ApplicationId>com.vapor.qa.wastesorting</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
@@ -26,6 +26,8 @@
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+		<ProvisioningType>automatic</ProvisioningType>
+		<CodesignKey>iPhone Developer</CodesignKey>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -45,8 +47,8 @@
 	
 	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<!-- Required - WinUI does not yet have buildTransitive for everything -->
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
+		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.1" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -69,8 +71,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	  <PackageReference Include="Refit" Version="6.1.15" />
+	  <PackageReference Include="Refit" Version="6.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>

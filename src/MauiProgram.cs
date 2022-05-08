@@ -2,6 +2,8 @@
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using WasteSortingMauiApp.Service;
 
 namespace WasteSortingMauiApp
 {
@@ -16,6 +18,8 @@ namespace WasteSortingMauiApp
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				});
+			builder.Services
+			   .AddSingleton<LoadingDialogService>();
 
 			return builder.Build();
 		}

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using WasteSortingMauiApp.ApiService;
 using WasteSortingMauiApp.Dtos;
 using WasteSortingMauiApp.Pages;
+using WasteSortingMauiApp.Service;
 
 namespace WasteSortingMauiApp.ViewModels
 {
@@ -61,25 +62,49 @@ namespace WasteSortingMauiApp.ViewModels
         private async Task Search()
         {
             var service = RefitApiService.GetService<IWasteSearchApi>();
+            LoadingDialogService.Instance.Loading();
             IsBusy = true;
-            var dto = await service.KeySearch(SearchKey);
-            IsBusy = false;
-            Debug.WriteLine("Search ===== "+JsonConvert.SerializeObject(dto));
-            Keys.Clear();
-            if (dto != null && dto.kw_arr != null)
+            ResponseDto dto = null;
+
+            void LoadingEnd()
             {
-                foreach (var item in dto.kw_arr)
+
+                IsBusy = false;
+                LoadingDialogService.Instance.HideLoading();
+            }
+
+            try
+            {
+                dto = await service.KeySearch(SearchKey);
+                LoadingEnd();
+                Debug.WriteLine("Search ===== " + JsonConvert.SerializeObject(dto));
+                Keys.Clear();
+                if (dto != null && dto.kw_arr != null)
                 {
-                    keys.Add(new KeyItemViewModel
+                    foreach (var item in dto.kw_arr)
                     {
-                        Name = item.Name,
-                        ActionKeyTapped = new Action<string>( async(name)=> await WasteClicked(waste: name))
-                    });
+                        keys.Add(new KeyItemViewModel
+                        {
+                            Name = item.Name,
+                            ActionKeyTapped = new Action<string>(async (name) => await WasteClicked(waste: name))
+                        });
+                    }
+                }
+                else
+                {
+                    NoDataToast();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                
+                LoadingEnd();
+                NoDataToast();
+                return;
+            }
+
+            void NoDataToast()
+            {
+                AlertService.Instance.Toast("没有相关数据...");
             }
         }
 

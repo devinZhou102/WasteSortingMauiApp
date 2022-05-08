@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
 using WasteSortingMauiApp.Models;
 using WasteSortingMauiApp.ViewModels;
 

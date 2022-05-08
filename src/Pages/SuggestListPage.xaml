@@ -28,7 +28,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid x:DataType="viewmodels:KeyItemViewModel" Padding="12" BackgroundColor="White"> 
+                    <Grid x:DataType="viewmodels:KeyItemViewModel" Padding="12" BackgroundColor="White">
                         <Label Text="{Binding Name}" TextColor="Black"/>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding KeyTappedCommand}"/>
@@ -37,10 +37,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Grid BackgroundColor="#80000000" Opacity="50" IsVisible="{Binding IsBusy}" Grid.RowSpan="2" >
-            <ProgressBar IsEnabled="True" ProgressColor="Green" Margin="12" />
-            <IndicatorView IsEnabled="True" IndicatorColor="Red"/>
-        </Grid>
     </Grid>
     
 </ContentPage>

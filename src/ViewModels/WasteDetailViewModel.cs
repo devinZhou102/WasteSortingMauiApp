@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WasteSortingMauiApp.ApiService;
 using WasteSortingMauiApp.Dtos;
 using WasteSortingMauiApp.Models;
+using WasteSortingMauiApp.Service;
 
 namespace WasteSortingMauiApp.ViewModels
 {
@@ -41,19 +42,42 @@ namespace WasteSortingMauiApp.ViewModels
         public async Task Search()
         {
             var service = RefitApiService.GetService<IWasteSearchApi>();
+            LoadingDialogService.Instance.Loading();
             IsBusy = true;
-            var dto = await service.WasteSearch(WasteName);
-            IsBusy = false;
-            Debug.WriteLine("Search ===== " + JsonConvert.SerializeObject(dto));
-            if (dto != null && dto.query_result_type_1 != null)
-            {
-                var data = dto.query_result_type_1;
-                Waste = WasteDatas.WasteModelCreate(data.trashType);
-            }
-            else
+            ResponseDto dto = null;
+            void LoadingEnd()
             {
 
+                IsBusy = false;
+                LoadingDialogService.Instance.HideLoading();
             }
+            try
+            {
+                dto = await service.WasteSearch(WasteName);
+                Debug.WriteLine("Search ===== " + JsonConvert.SerializeObject(dto));
+                LoadingEnd();
+                if (dto != null && dto.query_result_type_1 != null)
+                {
+                    var data = dto.query_result_type_1;
+                    Waste = WasteDatas.WasteModelCreate(data.trashType);
+                }
+                else
+                {
+                    NoDataToast();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoadingEnd();
+                NoDataToast();
+                return;
+            }
+
+            void NoDataToast()
+            {
+                AlertService.Instance.Toast("没有相关数据...");
+            }
+
         }
     }
 }

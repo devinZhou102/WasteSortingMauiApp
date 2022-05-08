@@ -40,10 +40,6 @@
                 <Label Text="{Binding Waste.Name,StringFormat='{0}注意'}"  Margin="12,0,0,0" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
             </Grid>
             <Label Text="{Binding Waste.Notice}" Grid.Row="5"  Margin="12,0" Grid.ColumnSpan="2" TextColor="Black"/>
-            <Grid BackgroundColor="#80000000" Opacity="50" IsVisible="{Binding IsBusy}" Grid.RowSpan="6" Grid.ColumnSpan="2">
-                <ProgressBar IsEnabled="True" ProgressColor="Green" Margin="12" Progress="50" />
-            </Grid>
-
         </Grid>
     </ContentPage.Content>
 </ContentPage>
