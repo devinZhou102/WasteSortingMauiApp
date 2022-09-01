@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ActiveDebugFramework>net6.0-android</ActiveDebugFramework>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugProfile>Samsung SM-G7810 (Android 12.0 - API 31)</ActiveDebugProfile>
+    <ActiveDebugProfile>HMD Global TA-1052 (Android 9.0 - API 28)</ActiveDebugProfile>
     <SelectedDevice>Samsung SM-G7810</SelectedDevice>
     <DefaultDevice>pixel_2_-_api_28</DefaultDevice>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
@@ -15,4 +15,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|x64'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="Platforms\Windows\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
 </Project>

@@ -27,8 +27,6 @@ namespace WasteSortingMauiApp.WinUI
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-
-            Microsoft.Maui.Essentials.Platform.OnLaunched(args);
         }
     }
 }

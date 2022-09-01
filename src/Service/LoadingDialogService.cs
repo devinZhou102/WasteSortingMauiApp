@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WasteSortingMauiApp.Utils;
 
 namespace WasteSortingMauiApp.Service
 {
@@ -17,12 +18,18 @@ namespace WasteSortingMauiApp.Service
 
         public void Loading()
         {
-            UserDialogs.Instance.ShowLoading();
+            if(DeviceUtil.IsUserDialogsOk())
+            {
+                UserDialogs.Instance.ShowLoading();
+            }
         }
 
         public void HideLoading()
         {
-            UserDialogs.Instance.HideLoading();
+            if (DeviceUtil.IsUserDialogsOk())
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
 
     }

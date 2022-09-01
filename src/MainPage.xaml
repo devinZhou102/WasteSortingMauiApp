@@ -13,7 +13,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0"/>
             <RowDefinition Height="48"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Label Text="" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" FontSize="20"/>
@@ -65,6 +66,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button Grid.Row="3" Text="Take Photo" Clicked="Button_Clicked"  HorizontalOptions="Center" ></Button>
     </Grid>   
 
 

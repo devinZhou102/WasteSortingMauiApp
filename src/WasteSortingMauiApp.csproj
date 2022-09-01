@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
+		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
 		<RootNamespace>WasteSortingMauiApp</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
 		<ApplicationTitle>垃圾分类助手</ApplicationTitle>
@@ -16,27 +18,24 @@
 		<ApplicationId>com.vapor.qa.wastesorting</ApplicationId>
 
 		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<!-- Required for C# Hot Reload -->
-		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
-
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
-		<ProvisioningType>automatic</ProvisioningType>
-		<CodesignKey>iPhone Developer</CodesignKey>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
 
-		<MauiImage Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" IsAppIcon="true" Color="#01B468" />
+		<MauiImage Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" IsAppIcon="true" Color="#01B468" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appsplash.svg" Color="#01B468" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#01B468" />
 		
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -47,21 +46,37 @@
 	
 	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<!-- Required - WinUI does not yet have buildTransitive for everything -->
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.1" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.3" />
+		<!--<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.3.1" />-->
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <None Remove="Resources\appsplash.svg" />
+	  <None Remove="imagenet_classes.txt" />
+	  <None Remove="mobilenetv2-7.onnx" />
+	  <None Remove="mobilenet_waste.onnx" />
+	  <None Remove="Resources\AppIcon\splash.svg" />
 	  <None Remove="Resources\Images\icon_dry.png" />
 	  <None Remove="Resources\Images\icon_harmful.png" />
 	  <None Remove="Resources\Images\icon_recycle.png" />
 	  <None Remove="Resources\Images\icon_wet.png" />
 	  <None Remove="Resources\waste.json" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <EmbeddedResource Include="imagenet_classes.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="mobilenetv2-7.onnx" />
+	  <EmbeddedResource Include="mobilenet_waste.onnx">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Resources\Styles\" />
 	  <Folder Include="Views\" />
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,8 +87,15 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.12.1" />
+	  <!--<PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.11.0" />-->
+	  <!--<PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.12.0-dev-20220405-1036-60f4d6a03" />-->
+	  <PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.12.1" />
+	   <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="Refit" Version="6.3.2" />
+	  <PackageReference Include="SkiaSharp" Version="2.88.1" />
+	  <PackageReference Include="System.Memory" Version="4.5.5" />
+	  <PackageReference Include="System.Runtime" Version="4.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,9 +104,9 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
+	<!-- <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-	</PropertyGroup>
+	</PropertyGroup> -->
 	
 </Project>
